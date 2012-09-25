@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS CSV Viewer</title>
+    <link rel="stylesheet" href="SlickGrid/slick.grid.css" type="text/css"/>
+    <link rel="stylesheet" href="SlickGrid/css/smoothness/jquery-ui-1.8.16.custom.css" type="text/css"/>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+</head>
+<body>
+    <form id="input-form">
+        <input type="text" placeholder="URL" class="url"/>
+        <input type="file" class="file"/>
+        <textarea placeholder="comma-separated values" class="csv"></textarea>
+        <input type="submit" value="Render"/>
+    </form>
+
+    <div id="grid"></div>
+
+    <script src="SlickGrid/lib/jquery-1.7.min.js"></script>
+    <script src="SlickGrid/lib/jquery.event.drag-2.0.min.js"></script>
+    <script src="SlickGrid/slick.core.js"></script>
+    <script src="SlickGrid/slick.grid.js"></script>
+    <script src="CSVToArray.js"></script>
+    <script src="csv-viewer.js"></script>
+</body>
+</html>
