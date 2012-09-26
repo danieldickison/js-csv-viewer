@@ -3,6 +3,7 @@ var express = require('express'),
     http = require('http');
 
 app.use(express.logger('dev'));
+app.use(express.errorHandler());
 app.use(express.static(__dirname + '/public'));
 app.get('/remote-csv', function (req, res, next) {
     var url = req.query.url;
