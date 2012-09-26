@@ -1,18 +1,15 @@
-if (!'history' in window ||
+if (!('history' in window) ||
     !window.history.replaceState ||
-    !Array.prototype.map) {
+    !Array.prototype.map ||
+    !('FileReader' in window)) {
     alert('This browser is not supported');
 }
 
 $('#input-form').submit(function () {
     var text = $(this).find('.csv').val(),
-        file = $(this).find('.file')[0].files[0],
         url = $(this).find('.url').val();
     if (text) {
         renderCSVString(text);
-    }
-    else if (file) {
-        // TODO read and parse file.
     }
     else if (url) {
         history.replaceState(null, null, '?url=' + url);
@@ -21,9 +18,51 @@ $('#input-form').submit(function () {
     return false;
 })
 .find('.url').on('change', function () {
-    $('#input-form .csv').text('');
-    $('#input-form .file').val('');
+    $('#input-form .csv').val('');
 });
+
+$('body')
+.on('dragenter dragover', function (e) {
+    var type = e.originalEvent.dataTransfer.types[0];
+    if (type && type === 'Files') {
+        showMessage('Drop file to display');
+        e.originalEvent.dataTransfer.dropEffect = 'copy';
+        return false;
+    }
+    else {
+        return true;
+    }
+})
+.on('dragexit', function (e) {
+    showMessage(false);
+})
+.on('drop', function (e) {
+    var file = e.originalEvent.dataTransfer.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var text = reader.result;
+            $('#input-form .csv').val(text);
+            renderCSVString(text);
+            showMessage(false);
+        };
+        showMessage('Reading file…')
+        reader.readAsText(file);
+        return false;
+    }
+    else {
+        return true;
+    }
+});
+
+function showMessage(msg) {
+    if (msg) {
+        $('#mask').fadeIn('fast').find('.message').text(msg);
+    }
+    else {
+        $('#mask').fadeOut();
+    }
+}
 
 function renderFromURL(url) {
     $.ajax({
@@ -34,7 +73,7 @@ function renderFromURL(url) {
         dataType: 'text'
     })
     .done(function (data) {
-        $('#input-form .csv').text(data);
+        $('#input-form .csv').val(data);
         renderCSVString(data);
     })
     .fail(function () {
