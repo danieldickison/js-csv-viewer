@@ -1,15 +1,17 @@
 var express = require('express'),
     app = express(),
     http = require('http'),
+    https = require('https'),
     url = require('url');
 
 app.use(express.logger('dev'));
 app.use(express.errorHandler());
 app.use(express.static(__dirname + '/public'));
 app.get('/remote-csv', function (req, res, next) {
-    var urlStr = req.query.url;
+    var urlStr = req.query.url,
+        urlParsed = url.parse(urlStr);
     console.log('proxying remote csv url: ', urlStr);
-    http.get(url.parse(urlStr), function (httpRes) {
+    (urlParsed.protocol === 'https:' ? https : http).get(urlParsed, function (httpRes) {
         httpRes
         .on('data', function (data) {
             res.write(data);
