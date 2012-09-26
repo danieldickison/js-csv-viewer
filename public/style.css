@@ -1,14 +1,26 @@
+body {
+    padding: 10px;
+}
+
 #input-form {
     display: block;
     border: solid 2px gray;
 }
+#input-form .url {
+    display: block;
+    width: 300px;
+}
 #input-form .file {
     display: none;
 }
+#input-form .csv {
+    display: block;
+    font-family: monospace;
+    font-size: 10px;
+}
 
-#grid {
-    width: 100%;
-    min-height: 400px;
+#grid {;
+    min-height: 200px;
     border: solid 2px gray;
     font-size: 12px;
 }

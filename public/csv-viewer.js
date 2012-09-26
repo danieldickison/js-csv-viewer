@@ -1,3 +1,9 @@
+if (!'history' in window ||
+    !window.history.replaceState ||
+    !Array.prototype.map) {
+    alert('This browser is not supported');
+}
+
 $('#input-form').submit(function () {
     var text = $(this).find('.csv').val(),
         file = $(this).find('.file')[0].files[0],
@@ -9,6 +15,7 @@ $('#input-form').submit(function () {
         // TODO read and parse file.
     }
     else if (url) {
+        history.replaceState(null, null, '?url=' + url);
         renderFromURL(url);
     }
     return false;
@@ -44,15 +51,28 @@ function renderCSVString(str) {
     slickgrid.render();
 }
 
+function resizeGridHeight() {
+    var windowHeight = $(window).height(),
+        inputPanelHeight = $('#input-form').outerHeight();
+    $('#grid').height(windowHeight - inputPanelHeight - 40);
+}
+
 var options = {
         enableCellNavigation: true,
-        enableColumnReorder: false
+        enableColumnReorder: true,
+        leaveSpaceForNewRows: false
     },
     slickgrid = new Slick.Grid('#grid', [], [], options);
 
-var queryURL = window.location.search.match(/[?&]url=([^?&]+)/)[1];
-if (queryURL) {
-    var url = decodeURIComponent(queryURL);
-    $('#input-form .url').val(url);
-    renderFromURL(url);
-}
+$(document).ready(function () {
+    resizeGridHeight();
+    $(window).on('resize', resizeGridHeight);
+
+    var urlMatch = window.location.search.match(/[?&]url=([^?&]+)/),
+        queryURL = urlMatch && urlMatch[1];
+    if (queryURL) {
+        var url = decodeURIComponent(queryURL);
+        $('#input-form .url').val(url);
+        renderFromURL(url);
+    }
+});
