@@ -19,6 +19,10 @@ $('#input-form').submit(function () {
         renderFromURL(url);
     }
     return false;
+})
+.find('.url').on('change', function () {
+    $('#input-form .csv').text('');
+    $('#input-form .file').val('');
 });
 
 function renderFromURL(url) {
