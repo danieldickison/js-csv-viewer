@@ -1,14 +1,15 @@
 var express = require('express'),
     app = express(),
-    http = require('http');
+    http = require('http'),
+    url = require('url');
 
 app.use(express.logger('dev'));
 app.use(express.errorHandler());
 app.use(express.static(__dirname + '/public'));
 app.get('/remote-csv', function (req, res, next) {
-    var url = req.query.url;
-    console.log('proxying remote csv url: ', url);
-    http.get(url, function (httpRes) {
+    var urlStr = req.query.url;
+    console.log('proxying remote csv url: ', urlStr);
+    http.get(url.parse(urlStr), function (httpRes) {
         httpRes
         .on('data', function (data) {
             res.write(data);
