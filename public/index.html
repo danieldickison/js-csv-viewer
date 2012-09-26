@@ -8,9 +8,9 @@
 </head>
 <body>
     <form id="input-form">
-        <input type="text" placeholder="URL" class="url"/>
-        <input type="file" class="file"/>
-        <textarea placeholder="comma-separated values" class="csv"></textarea>
+        <label>URL: <input type="text" placeholder="URL" class="url"/></label>
+        <label style="display:none">Upload: <input type="file" class="file"/></label>
+        <label>CSV: <textarea placeholder="comma-separated values" wrap="off" class="csv"></textarea></label>
         <input type="submit" value="Render"/>
     </form>
 
