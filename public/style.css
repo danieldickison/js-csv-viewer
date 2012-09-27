@@ -6,17 +6,21 @@ body {
 }
 
 #meta {
-    float: right;
-    padding: 5px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 10px;
 }
 
 #input-form {
     display: block;
     padding: 10px;
     border-bottom: solid 2px gray;
+    overflow: auto;
 }
 #input-form > label {
     display: block;
+    float: left;
 }
 #input-form .url {
     width: 700px;
@@ -25,7 +29,7 @@ body {
     font-family: monospace;
     font-size: 10px;
     width: 700px;
-    min-height: 50px;
+    min-height: 40px;
 }
 
 #grid {;
