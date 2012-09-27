@@ -4,9 +4,15 @@ var express = require('express'),
     https = require('https'),
     url = require('url');
 
+app.set('view engine', 'ejs');
+app.locals.googleAnalyticsID = process.env.GOOGLE_ANALYTICS_ID;
+
 app.use(express.logger('dev'));
 app.use(express.errorHandler());
 app.use(express.static(__dirname + '/public'));
+app.get('/', function (req, res) {
+    res.render('index');
+});
 app.get('/remote-csv', function (req, res, next) {
     var urlStr = req.query.url,
         urlParsed = url.parse(urlStr);
