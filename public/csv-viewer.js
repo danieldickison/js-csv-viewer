@@ -44,6 +44,7 @@ $('body')
 .on('drop', function (e) {
     var file = e.originalEvent.dataTransfer.files[0];
     if (file) {
+        $('#input-form .url').val('');
         var reader = new FileReader();
         reader.onload = function () {
             var text = reader.result;
@@ -70,6 +71,7 @@ function showMessage(msg) {
 }
 
 function renderFromURL(url) {
+    showMessage('Loading URL…');
     $.ajax({
         url: '/remote-csv',
         data: {
@@ -82,26 +84,31 @@ function renderFromURL(url) {
         renderCSVString(data);
     })
     .fail(function () {
+        showMessage(false);
         alert('failed');
     });
 }
 
 function renderCSVString(str) {
-    var array = CSVToArray(str),
-        headerRow = array.shift(),
-        columns = headerRow.map(function (header, i) {
-            header = header || '';
-            return {name: header, field: i, id: header, sortable: true};
-        });
-    slickgrid.setColumns(columns);
-    slickgrid.setData(new DataView(array));
-    slickgrid.updateRowCount();
-    slickgrid.render();
+    showMessage('Parsing CSV…');
+    setTimeout(function () {
+        var array = CSVToArray(str),
+            headerRow = array.shift(),
+            columns = headerRow.map(function (header, i) {
+                header = header || '';
+                return {name: header, field: i, id: header, sortable: true};
+            });
+        slickgrid.setColumns(columns);
+        slickgrid.setData(new DataView(array));
+        slickgrid.updateRowCount();
+        slickgrid.render();
+        showMessage(false);
+    }, 1);
 }
 
 function resizeGridHeight() {
     var windowHeight = $(window).height(),
-        inputPanelHeight = $('#input-form').outerHeight();
+        inputPanelHeight = $('#top-panel').outerHeight();
     $('#grid').height(windowHeight - inputPanelHeight);
 }
 
