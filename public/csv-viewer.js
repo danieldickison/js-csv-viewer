@@ -97,7 +97,7 @@ function renderCSVString(str) {
 function resizeGridHeight() {
     var windowHeight = $(window).height(),
         inputPanelHeight = $('#input-form').outerHeight();
-    $('#grid').height(windowHeight - inputPanelHeight - 40);
+    $('#grid').height(windowHeight - inputPanelHeight);
 }
 
 var options = {

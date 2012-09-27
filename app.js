@@ -6,6 +6,7 @@ var express = require('express'),
 
 app.set('view engine', 'ejs');
 app.locals.googleAnalyticsID = process.env.GOOGLE_ANALYTICS_ID;
+app.locals.repoURL = 'https://github.com/danieldickison/js-csv-viewer';
 
 app.use(express.logger('dev'));
 app.use(express.errorHandler());
