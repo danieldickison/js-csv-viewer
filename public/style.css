@@ -12,11 +12,12 @@ body {
     padding: 10px;
 }
 
-#input-form {
+#top-panel {
     display: block;
     padding: 10px;
     border-bottom: solid 2px gray;
     overflow: auto;
+    position: relative;
 }
 #input-form > label {
     display: block;
@@ -30,6 +31,13 @@ body {
     font-size: 10px;
     width: 700px;
     min-height: 40px;
+}
+
+#filter {
+    position: absolute;
+    width: 200px;
+    right: 10px;
+    bottom: 10px;
 }
 
 #grid {;

@@ -35,7 +35,8 @@
 				"([^\"\\" + strDelimiter + "\\r\\n]*))"
 			),
 			"gi"
-			);
+			),
+            numberPattern = /^\s*\d*\.?\d+\s*$/;
  
  
 		// Create an array to hold our data. Give the array
@@ -89,6 +90,9 @@
  
 			}
  
+            if (numberPattern.test(strMatchedValue)) {
+                strMatchedValue = parseFloat(strMatchedValue);
+            }
  
 			// Now that we have our value string, let's add
 			// it to the data array.

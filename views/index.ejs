@@ -7,14 +7,17 @@
     <link rel="stylesheet" href="style.css" type="text/css"/>
 </head>
 <body>
-    <div id="meta">
-        <a target="_blank" href="<%= repoURL %>">Repo</a>
+    <div id="top-panel">
+        <div id="meta">
+            <a target="_blank" href="<%= repoURL %>">Repo</a>
+        </div>
+        <form id="input-form">
+            <label>URL: <input type="text" placeholder="URL" class="url"/></label>
+            <label>CSV: <textarea placeholder="comma-separated values" wrap="off" class="csv"></textarea></label>
+            <input type="submit" value="Render"/>
+        </form>
+        <input type="search" placeholder="Filter" id="filter"/>
     </div>
-    <form id="input-form">
-        <label>URL: <input type="text" placeholder="URL" class="url"/></label>
-        <label>CSV: <textarea placeholder="comma-separated values" wrap="off" class="csv"></textarea></label>
-        <input type="submit" value="Render"/>
-    </form>
 
     <div id="grid"></div>
 
